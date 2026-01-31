@@ -2,26 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 200 50% 3%;
+    --foreground: 180 100% 90%;
+    --card: 200 50% 3%;
+    --card-foreground: 180 100% 90%;
+    --popover: 200 50% 3%;
+    --popover-foreground: 180 100% 90%;
+    --primary: 180 78% 46%;
+    --primary-foreground: 200 50% 3%;
+    --secondary: 200 35% 10%;
+    --secondary-foreground: 180 100% 90%;
+    --muted: 200 35% 10%;
+    --muted-foreground: 180 20% 60%;
+    --accent: 180 50% 15%;
+    --accent-foreground: 180 100% 90%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 180 100% 90%;
+    --border: 180 30% 20%;
+    --input: 200 35% 10%;
+    --ring: 180 78% 46%;
+    --chart-1: 180 78% 46%;
+    --chart-2: 340 75% 55%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 160 60% 45%;
+    --radius: 0.5rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer base {
+  * {
+    font-family: "Monserrat", sans-serif;
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .swiper-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    transition-property: transform;
+    transition-timing-function: var(
+      --swiper-wrapper-transition-timing-function,
+      initial
+    );
+    box-sizing: content-box;
+  }
+  .container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 80rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 64rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 48rem;
+    }
+  }
+  .container {
+    max-width: none;
   }
 }
