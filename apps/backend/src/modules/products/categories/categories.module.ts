@@ -13,5 +13,6 @@ console.log('CategoriesRepositories:', CategoriesRepositories);
   imports: [],
   controllers: [CategoriesController],
   providers: [CategoriesService, CategoriesRepositories],
+  exports: [CategoriesRepositories],
 })
 export class CategoriesModule {}

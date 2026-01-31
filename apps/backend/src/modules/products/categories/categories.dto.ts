@@ -27,8 +27,8 @@ export class ClassRequestParams {
 
 export class CategoryRequest {
   @IsString()
-  @MinLength(8, {
-    message: 'Name Min 8 Characters',
+  @MinLength(5, {
+    message: 'Name Min 5 Characters',
   })
   @MaxLength(150, {
     message: 'Name Value Too Long',
@@ -36,9 +36,6 @@ export class CategoryRequest {
   name: string;
 
   @IsString()
-  @MinLength(8, {
-    message: 'Icon Min 8 Characters',
-  })
   @MaxLength(500, {
     message: 'Icon Value Too Long',
   })

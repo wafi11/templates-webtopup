@@ -32,6 +32,17 @@ export class CategoriesRepositories {
     };
   }
 
+  async findCategoriesIdByName(category: string): Promise<number> {
+    const [data] = await this.db
+      .select({
+        id: categoriesTable.id,
+      })
+      .from(categoriesTable)
+      .where(eq(categoriesTable.name, category));
+
+    return data.id;
+  }
+
   async FindAll(req: RequestParams): Promise<Categories[]> {
     let categories: CategoriesTable[];
 
