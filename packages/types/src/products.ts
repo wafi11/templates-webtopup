@@ -119,3 +119,24 @@ export type ProductItems = {
   stock: number;
   is_best_seller: boolean;
 };
+
+export const validationFormFields = z.object({
+  label: validationMinAndMaxValue(5, "Form Fields Label", 50),
+  value: validationMinAndMaxValue(5, "Form Fields Value", 50),
+  type: validationMinAndMaxValue(3, "Form Fields Type", 20),
+  valuesOption: z.string().nullable(),
+  order: z.number(),
+  productId: z.number(),
+});
+
+export type RequestFormField = z.infer<typeof validationFormFields>;
+
+export type FormFields = {
+  id: number;
+  order: number | null;
+  product_id: number;
+  label: string;
+  value: string;
+  type: string;
+  values_option: string | null;
+};

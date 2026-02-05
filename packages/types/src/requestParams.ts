@@ -18,3 +18,11 @@ export class ClassRequestParams {
 }
 
 export type RequestParams = z.infer<typeof validationRequestParams>;
+
+export type ResponseCheckNickname = {
+  success: boolean;
+  game: string;
+  id: string;
+  server?: string;
+  name: string;
+};
