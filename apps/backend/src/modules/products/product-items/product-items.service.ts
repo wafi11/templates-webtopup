@@ -14,6 +14,10 @@ export class ProductItemsService {
     return await this.repo.FindAll(req);
   }
 
+  async FindAllBySubProductId(productId: number, subProductId: number) {
+    return await this.repo.FindAllByProductId(productId, subProductId);
+  }
+
   async Update(req: ProductItemsRequest, id: number) {
     return await this.repo.Update(req, id);
   }

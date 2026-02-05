@@ -26,6 +26,11 @@ export class ProductController {
     return this.svc.FindAll(req);
   }
 
+  @Get(':slug')
+  async FindBySlug(@Param('slug') slug: string) {
+    return this.svc.FindBySlug(slug);
+  }
+
   @Get('digiflazz')
   async GetProductsFromDigiflazz() {
     return await this.svc.GetProductsFromDigiflazz();

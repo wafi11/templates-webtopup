@@ -51,6 +51,7 @@ export const productsTable = pgTable(
     description: text(),
     thumbnail: text(),
     banner_image: text(),
+    code_check_nickname: varchar({ length: 10 }),
     is_active: boolean().default(true).notNull(),
     order: integer().default(0).notNull(),
     created_at: timestamp().defaultNow().notNull(),
@@ -113,7 +114,9 @@ export const productItemsTable = pgTable(
     sub_product_id: integer()
       .references(() => subProductsTable.id, { onDelete: 'cascade' })
       .notNull(),
-
+    product_id: integer().references(() => productsTable.id, {
+      onDelete: 'cascade',
+    }),
     base_price: bigint({ mode: 'number' }).notNull(),
     discount_price: bigint({ mode: 'number' }),
     stock: integer().default(999999).notNull(),
@@ -135,8 +138,13 @@ export const productItemsTable = pgTable(
       table.is_best_seller,
       table.is_active,
     ),
-    priceIdx: index('product_items_price_idx').on(table.base_price),
     stockIdx: index('product_items_stock_idx').on(table.stock, table.is_active),
+    productIdx: index('product_items_product_id_idx').on(table.product_id),
+    productActiveOrderIdx: index('product_items_product_active_order_idx').on(
+      table.product_id,
+      table.is_active,
+      table.order,
+    ),
   }),
 );
 

@@ -18,6 +18,10 @@ export class ProductService {
     return await this.repo.Create(req);
   }
 
+  async FindBySlug(req: string) {
+    return await this.repo.FindBySlug(req);
+  }
+
   async FindAll(req: RequestParams) {
     return await this.repo.FindAll(req);
   }

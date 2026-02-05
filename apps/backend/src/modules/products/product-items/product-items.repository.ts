@@ -8,7 +8,7 @@ import {
   RequestParams,
 } from '@repo/types';
 import { productItemsTable } from 'src/db/schema';
-import { eq } from 'drizzle-orm';
+import { and, asc, eq } from 'drizzle-orm';
 
 @Injectable()
 export class ProductItemsRepository {
@@ -65,6 +65,39 @@ export class ProductItemsRepository {
 
       this.logger.log(`Found ${data.length} product items`);
       this.logger.debug(`Product items data: ${JSON.stringify(data)}`);
+
+      return data.map((item) => ({
+        ...item,
+        created_at: convertToTimestamp(item.created_at),
+        updated_at: convertToTimestamp(item.updated_at),
+      }));
+    } catch (error) {
+      this.logger.error(
+        `Failed to fetch product items: ${error.message}`,
+        error.stack,
+      );
+      throw error;
+    }
+  }
+  async FindAllByProductId(
+    productId: number,
+    subProductId: number,
+  ): Promise<ProductItems[]> {
+    try {
+      const conditions = [eq(productItemsTable.product_id, productId)];
+
+      if (subProductId !== 0) {
+        conditions.push(eq(productItemsTable.sub_product_id, subProductId));
+      }
+
+      const data = await this.db
+        .select()
+        .from(productItemsTable)
+        .where(and(...conditions))
+        .orderBy(
+          asc(productItemsTable.sub_product_id),
+          asc(productItemsTable.base_price),
+        );
 
       return data.map((item) => ({
         ...item,

@@ -4,7 +4,7 @@ import {
   SubProduct,
   SubProductRequest,
 } from '@repo/types';
-import { eq } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 import { InjectDb } from 'src/db/db.provider';
 import type { DB } from 'src/db/db.provider';
 import { subProductsTable } from 'src/db/schema';
@@ -28,12 +28,18 @@ export class SubProductRepository {
       updated_at: convertToTimestamp(data.updated_at),
     };
   }
-  async FindAll(req: RequestParams): Promise<SubProduct[]> {
+  async FindAll(req: RequestParams, product_id: number): Promise<SubProduct[]> {
     const data = await this.db
       .select()
       .from(subProductsTable)
+      .where(
+        product_id !== 0
+          ? eq(subProductsTable.product_id, product_id)
+          : undefined,
+      )
       .limit(req.limit)
-      .offset(req.offset);
+      .offset(req.offset)
+      .orderBy(asc(subProductsTable.order));
 
     return data.map((item) => ({
       ...item,

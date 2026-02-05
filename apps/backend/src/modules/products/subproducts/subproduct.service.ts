@@ -10,8 +10,8 @@ export class SubProductService {
     return await this.repo.Create(req);
   }
 
-  async FindAll(req: RequestParams) {
-    return await this.repo.FindAll(req);
+  async FindAll(req: RequestParams, id: number) {
+    return await this.repo.FindAll(req, id);
   }
 
   async Update(req: SubProductRequest, id: number) {

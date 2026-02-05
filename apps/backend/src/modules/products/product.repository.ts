@@ -15,6 +15,7 @@ import {
   subProductsTable,
 } from 'src/db/schema';
 import { ProductDigiflazz } from 'src/integrations/digiflazz/digiflazz.dto';
+import { normalizedProductSlug } from './helpers';
 
 @Injectable()
 export class ProductRepository {
@@ -50,6 +51,20 @@ export class ProductRepository {
       created_at: convertToTimestamp(item.created_at),
       updated_at: convertToTimestamp(item.updated_at),
     }));
+  }
+
+  async FindBySlug(req: string): Promise<Product> {
+    const normalized = normalizedProductSlug(req);
+    const [data] = await this.db
+      .select()
+      .from(productsTable)
+      .where(eq(productsTable.slug, normalized));
+
+    return {
+      ...data,
+      created_at: convertToTimestamp(data.created_at),
+      updated_at: convertToTimestamp(data.updated_at),
+    };
   }
 
   async Update(req: ProductRequest, id: number): Promise<Product> {

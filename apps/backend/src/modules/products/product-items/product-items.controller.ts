@@ -25,6 +25,13 @@ export class ProductItemsController {
   async FindAll(@Query() req: ClassRequestParams) {
     return this.svc.FindAll(req);
   }
+  @Get('order')
+  async FindAllSubProductId(
+    @Query('sub-product', ParseIntPipe) subproduct: number,
+    @Query('product', ParseIntPipe) product: number,
+  ) {
+    return this.svc.FindAllBySubProductId(product, subproduct);
+  }
 
   @Put(':id')
   async Update(
