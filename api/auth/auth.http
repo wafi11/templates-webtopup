@@ -1,0 +1,21 @@
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "fullname" : "kajakajk",
+    "password" : "P@ssw0rd*1",
+    "email" : "wafiwafiwafi90@gmail.com"
+}
+
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "password" : "P@ssw0rd*1",
+    "email" : "wafiwafiwafi90@gmail.com"
+}
+
+###
+GET http://localhost:5000/api/auth/me
+Content-Type: application/json

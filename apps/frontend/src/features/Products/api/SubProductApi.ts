@@ -5,6 +5,7 @@ import {
   CreateSubProduct,
   DeleteSubProduct,
   FindSubProducts,
+  FindSubProductsRequest,
   UpdateSubProduct,
 } from "./EndpointSubProductApi";
 
@@ -21,7 +22,7 @@ export function useCreateSubProduct() {
   });
 }
 
-export function useFindSubProducts(params: RequestParams) {
+export function useFindSubProducts(params: FindSubProductsRequest) {
   return useQuery({
     queryKey: ["sub-product", params],
     queryFn: () => FindSubProducts(params),

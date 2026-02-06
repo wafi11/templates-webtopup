@@ -23,9 +23,12 @@ export function PopularSection() {
         </div>
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {data.data?.data.map((item) => (
-            <li className="group/product-card relative z-0 [--card-padding:theme(spacing.2)] [--card-radius:theme(borderRadius.2xl)]">
+            <li
+              key={item.id}
+              className="group/product-card relative z-0 [--card-padding:theme(spacing.2)] [--card-radius:theme(borderRadius.2xl)]"
+            >
               <Link
-                href={`/order/${item.code}`}
+                href={`/order/${item.slug?.toLowerCase().replaceAll(" ", "-")}`}
                 className="flex items-center gap-x-2 rounded-[--card-radius] bg-muted text-foreground duration-300 ease-in-out hover:shadow-2xl hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background md:gap-x-3 bg-title-product bg-popular-background text-popular-foreground"
               >
                 <div className="flex items-center gap-3 p-[--card-padding]">

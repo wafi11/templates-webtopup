@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/voucher
+Content-Type: application/json
+
+{
+    "calculationType": "FIXED",
+    "code": "CEKAJA",
+    "currentUsage": 0,
+    "description": "VOUCHER TEST",
+    "endAt": "2026-02-05T17:00:00.000Z",
+    "marginAmount": 1000,
+    "marginPercentage": "0",
+    "maxUsage": 10,
+    "maxUsagePerUser": 1,
+    "name": "TESTSSSSS",
+    "onlyProduct": false,
+    "productIds": "[]",
+    "startedAt": "2026-02-04T11:11:18.285Z"
+}

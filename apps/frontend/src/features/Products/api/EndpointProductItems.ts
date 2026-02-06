@@ -27,6 +27,19 @@ export async function FindProductItem(
   return request.data;
 }
 
+export async function FindProductItemOrder(
+  product: number,
+  sub: number,
+): Promise<ApiResponse<ProductItems[]>> {
+  const url = new URLSearchParams();
+  url.append("product", product.toString());
+  url.append("sub-product", sub.toString());
+  const request = await api.get<ApiResponse<ProductItems[]>>(
+    `/product-item/order?${url.toString()}`,
+  );
+  return request.data;
+}
+
 export async function UpdateProductItem(
   req: ProductItems,
 ): Promise<ApiResponse<ProductItems>> {

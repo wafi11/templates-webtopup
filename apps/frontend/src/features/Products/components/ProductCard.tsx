@@ -9,7 +9,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
-      href={`/order/${product.slug}`}
+      href={`/order/${product.slug?.toLowerCase().replaceAll(" ", "-")}`}
       className="relative block outline-none"
     >
       <div className="group relative overflow-hidden rounded-2xl bg-muted transition-all duration-300 ease-in-out hover:shadow-2xl hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background">

@@ -25,12 +25,29 @@ export class Api {
   constructor() {
     this.instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_API_URL,
+      withCredentials: true,
       headers: {
         // Authorization: `Bearer ${authStore.getAccessToken()}`,
         "Content-Type": "application/json",
         // Origin: process.env.NEXT_PUBLIC_BASE_URL,
       },
     });
+    let isRefreshing = false;
+    let failedQueue: Array<{
+      resolve: (value?: any) => void;
+      reject: (reason?: any) => void;
+    }> = [];
+
+    const processQueue = (error: any = null) => {
+      failedQueue.forEach((promise) => {
+        if (error) {
+          promise.reject(error);
+        } else {
+          promise.resolve();
+        }
+      });
+      failedQueue = [];
+    };
 
     this.instance.interceptors.response.use(
       (response: AxiosResponse) => {
@@ -44,6 +61,40 @@ export class Api {
         };
       },
       async (error: AxiosError) => {
+        const originalRequest = error.config as any;
+
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          if (isRefreshing) {
+            return new Promise((resolve, reject) => {
+              failedQueue.push({ resolve, reject });
+            })
+              .then(() => {
+                return this.instance(originalRequest);
+              })
+              .catch((err) => {
+                return Promise.reject(err);
+              });
+          }
+
+          originalRequest._retry = true;
+          isRefreshing = true;
+
+          try {
+            await this.instance.post("/auth/refresh");
+            processQueue();
+            isRefreshing = false;
+            return this.instance(originalRequest);
+          } catch (refreshError) {
+            processQueue(refreshError);
+            isRefreshing = false;
+            if (typeof window !== "undefined") {
+              window.location.href = "/login";
+            }
+
+            return Promise.reject(refreshError);
+          }
+        }
+
         if (error.response) {
           const errorData = error.response.data as BackendResponse<any>;
           throw {

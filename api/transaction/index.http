@@ -1,0 +1,16 @@
+POST http://localhost:7000/api/transaction
+Content-Type: application/json
+
+{
+    "productCode" : "mlweek",
+	"paymentCode" : "BR",
+    "voucherCode" : "",
+    "customerEmail" : "wafiq610@gmail.com",
+    "customerPhone" : "6282226197047",
+    "destination" : "8085702001",
+    "quantity" : 1
+}
+
+####
+GET http://localhost:7000/api/transaction/WFDN26lAZEguY1C
+Content-Type: application/json

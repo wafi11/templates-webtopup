@@ -1,3 +1,4 @@
+import { bigint } from 'drizzle-orm/pg-core';
 import { index } from 'drizzle-orm/pg-core';
 import {
   integer,
@@ -7,6 +8,7 @@ import {
   text,
   boolean,
 } from 'drizzle-orm/pg-core';
+import { transactionTable } from './transaction';
 
 export const usersTable = pgTable(
   'users',
@@ -16,6 +18,7 @@ export const usersTable = pgTable(
     username: varchar({ length: 255 }).notNull().unique(),
     email: varchar({ length: 255 }).notNull().unique(),
     email_verified: boolean().default(false),
+    balance: bigint({ mode: 'number' }).notNull().default(0),
     password_hash: text(),
     password: varchar({ length: 20 }),
     avatar_url: text(),
@@ -27,6 +30,11 @@ export const usersTable = pgTable(
     usernameIdx: index('users_username_idx').on(table.username),
   }),
 );
+
+export const rolesTable = pgTable('roles', {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull().unique(),
+});
 
 export const sessionsTable = pgTable(
   'sessions',
@@ -69,6 +77,49 @@ export const accountsTable = pgTable(
     providerIdx: index('accounts_provider_idx').on(
       table.provider,
       table.provider_account_id,
+    ),
+  }),
+);
+
+export const balance_logs = pgTable(
+  'balance_logs',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    invoice_number: varchar({ length: 50 })
+      .references(() => transactionTable.invoice_number)
+      .notNull(),
+    transaction_type: varchar({ length: 20 }),
+    before_balance: bigint({ mode: 'number' }),
+    after_balance: bigint({ mode: 'number' }),
+    amount: bigint({ mode: 'number' }),
+    user_id: integer().references(() => usersTable.id),
+    created_at: timestamp().defaultNow().notNull(),
+  },
+  (table) => ({
+    // Index untuk query by user (filter logs per user)
+    userIdIdx: index('balance_logs_user_id_idx').on(table.user_id),
+
+    // Index untuk query by invoice (trace transaction)
+    invoiceNumberIdx: index('balance_logs_invoice_number_idx').on(
+      table.invoice_number,
+    ),
+
+    // Composite index untuk query by user + time range
+    userCreatedIdx: index('balance_logs_user_created_idx').on(
+      table.user_id,
+      table.created_at.desc(),
+    ),
+
+    // Index untuk filter by transaction type
+    transactionTypeIdx: index('balance_logs_transaction_type_idx').on(
+      table.transaction_type,
+    ),
+
+    // Composite index untuk reporting (user + type + time)
+    userTypeCreatedIdx: index('balance_logs_user_type_created_idx').on(
+      table.user_id,
+      table.transaction_type,
+      table.created_at.desc(),
     ),
   }),
 );

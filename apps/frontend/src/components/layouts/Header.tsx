@@ -1,8 +1,7 @@
+import { AuthDropdown } from "@/features/Auth/AuthDropdown";
 import { Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Navbar } from "./Navbar";
 
 export function Header() {
@@ -36,25 +35,7 @@ export function Header() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    className="inline-flex items-center justify-center whitespace-nowrap transition-all
-                   rounded-lg shadow-sm bg-transparent border-2 border-border hover:bg-border h-9 px-4 py-2 pl-2 pr-3"
-                  >
-                    <div className="size-5">
-                      <Image
-                        height={100}
-                        width={100}
-                        src={"https://react-circle-flags.pages.dev/id.svg"}
-                        alt="Logo Indonesia"
-                      />
-                    </div>
-                    <span className="ml-2 text-white">ID / IDR</span>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>hahahha</DialogContent>
-              </Dialog>
+              <AuthDropdown />
             </div>
           </div>
         </div>

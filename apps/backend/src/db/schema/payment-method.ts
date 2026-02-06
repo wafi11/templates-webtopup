@@ -1,6 +1,7 @@
 import {
   decimal,
   integer,
+  bigint,
   pgTable,
   text,
   timestamp,
@@ -17,6 +18,8 @@ export const paymentMethodTable = pgTable(
     description: varchar({ length: 100 }),
     code: varchar({ length: 10 }).notNull(),
     image: text(),
+    min_amount: integer(),
+    max_amount: bigint({ mode: 'number' }),
     margin_percentage: decimal({ precision: 10, scale: 2 })
       .notNull()
       .default('0'),

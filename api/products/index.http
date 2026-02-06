@@ -1,0 +1,39 @@
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "http://127.0.0.1:9000/webtopup/PromoDetailBanner_old_desktop_Freefire.webp",
+    "categoryId": 9,
+    "code": "Telkomsel",
+    "description": "Telkomsel",
+    "isActive": true,
+    "name": "Telkomsel",
+    "order": 1,
+    "slug": "Telkomsel",
+    "thumbnail": "http://127.0.0.1:9000/webtopup/unnamed.png",
+    "subName": "Telkomsel Indonesia"
+}
+
+############################
+GET http://localhost:5000/api/product?limit=10&offset=0
+Content-Type: application/json
+############################
+GET http://localhost:5000/api/product/digiflazz
+Content-Type: application/json
+
+
+############################
+PUT http://localhost:5000/api/product/4
+Content-Type: application/json
+
+{
+    "name": "TEST KEDUA",
+    "order": 4,
+    "is_active": false,
+    "icon": "https:///"
+}
+
+############################
+DELETE  http://localhost:5000/api/product/6
+Content-Type: application/json
+

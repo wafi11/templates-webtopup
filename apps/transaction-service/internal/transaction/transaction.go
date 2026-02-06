@@ -50,7 +50,7 @@ const (
 			t.price,
 			t.quantity,
 			t.amount,
-			t.tax,
+			t.fee,
 			t.total,
 			t.discount_price,
 			t.created_at,
@@ -113,6 +113,12 @@ type TransactionRequest struct {
 	CustomerPhone string  `json:"customerPhone"`
 	Destination   string  `json:"destination"`
 	Quantity      int     `json:"quantity"`
+}
+
+type TransactionOrder struct {
+	TransactionRequest
+	DefineRequest
+	TransactionId string
 }
 
 type InsertTransaction struct {

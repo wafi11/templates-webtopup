@@ -10,6 +10,14 @@ export function formatDate(date: string | Date) {
   }).format(new Date(date));
 }
 
+export function formatCurrency(value: number): string {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(value);
+}
+
 export const formatPrice = (price: number | null) => {
   if (price === null) return "-";
   return new Intl.NumberFormat("id-ID", {

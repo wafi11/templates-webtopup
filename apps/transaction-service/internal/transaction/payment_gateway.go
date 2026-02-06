@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/wafi1104/templates-webtopup/apps/transaction-service/pkg"
 )
 
 type DuitkuService struct {
@@ -25,10 +27,10 @@ type DuitkuService struct {
 	HttpClient            *http.Client
 }
 
-func NewDuitkuService() *DuitkuService {
+func NewDuitkuService(cfg *pkg.Config) *DuitkuService {
 	return &DuitkuService{
-		DuitkuKey:             "",
-		DuitkuMerchantCode:    "",
+		DuitkuKey:             "8454471cb2ee389735fd55062f4490ff",
+		DuitkuMerchantCode:    "DS27822",
 		CallbackUrl:           "http://localhost:3000/api/transaction/callback",
 		BaseUrl:               "https://passport.duitku.com/webapi/api/merchant/v2/inquiry",
 		SandboxUrl:            "https://sandbox.duitku.com/webapi/api/merchant/v2/inquiry",

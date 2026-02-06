@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser()); // Use the cookie-parser middleware
+  app.use(cookieParser());
 
   app.enableCors({
     origin: 'http://localhost:3000',
@@ -33,30 +33,31 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
-  // try {
-  //   // Get queue instance dari NestJS
-  //   const productSyncQueue = app.get<Queue>('BullQueue_product-sync');
-
-  //   // Setup Bull Board
-  //   const serverAdapter = new ExpressAdapter();
-  //   serverAdapter.setBasePath('/admin/queues');
-
-  //   createBullBoard({
-  //     queues: [new BullAdapter(productSyncQueue)],
-  //     serverAdapter: serverAdapter,
-  //   });
-
-  //   // Mount ke Express
-  //   const expressApp = app.getHttpAdapter().getInstance();
-  //   expressApp.use('/admin/queues', serverAdapter.getRouter());
-
-  //   console.log('✅ Bull Board mounted at: http://localhost:5000/admin/queues');
-  // } catch (error) {
-  //   console.error('❌ Failed to setup Bull Board:', error.message);
-  //   console.error('Make sure Redis is running and queue is registered!');
-  // }
 
   await app.listen(5000);
   console.log('🚀 Application is running on: http://localhost:5000');
 }
 bootstrap();
+
+// try {
+//   // Get queue instance dari NestJS
+//   const productSyncQueue = app.get<Queue>('BullQueue_product-sync');
+
+//   // Setup Bull Board
+//   const serverAdapter = new ExpressAdapter();
+//   serverAdapter.setBasePath('/admin/queues');
+
+//   createBullBoard({
+//     queues: [new BullAdapter(productSyncQueue)],
+//     serverAdapter: serverAdapter,
+//   });
+
+//   // Mount ke Express
+//   const expressApp = app.getHttpAdapter().getInstance();
+//   expressApp.use('/admin/queues', serverAdapter.getRouter());
+
+//   console.log('✅ Bull Board mounted at: http://localhost:5000/admin/queues');
+// } catch (error) {
+//   console.error('❌ Failed to setup Bull Board:', error.message);
+//   console.error('Make sure Redis is running and queue is registered!');
+// }

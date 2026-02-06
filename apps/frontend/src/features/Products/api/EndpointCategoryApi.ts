@@ -24,6 +24,16 @@ export async function FindCategories(
   return request.data;
 }
 
+export async function FindCategoryBySlug(
+  slug: string,
+): Promise<ApiResponse<Categories>> {
+  const normalized = slug.toUpperCase().replaceAll(" ", "-");
+  const request = await api.get<ApiResponse<Categories>>(
+    `/category/${normalized}`,
+  );
+  return request.data;
+}
+
 export async function UpdateCategory(
   req: CategoriesRequest,
   id: number,

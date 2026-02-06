@@ -101,7 +101,7 @@ export class AuthService {
 
   async refreshToken(refresh_token: string): Promise<string> {
     const verifyToken = await this.authRepo.verifyToken(refresh_token);
-
+    console.log(refresh_token);
     const access_token = await this.authRepo.generateToken(
       {
         session_id: verifyToken.session_id,

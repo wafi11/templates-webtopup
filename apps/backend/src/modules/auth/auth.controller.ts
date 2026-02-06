@@ -48,18 +48,19 @@ export class AuthController {
 
     res.cookie('access_token', result.tokens.accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: false, // false untuk HTTP localhost
+      sameSite: 'lax', // Ubah dari 'none' ke 'lax'
       maxAge: 15 * 60 * 1000,
+      path: '/', // Tambahkan ini
     });
 
     res.cookie('refresh_token', result.tokens.refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: false,
+      sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000,
+      path: '/',
     });
-
     return {
       success: true,
     };
@@ -85,7 +86,7 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const refreshToken = req.cookies.refresh_token; // ✅ cookies (with 's')
+    const refreshToken = req.cookies.refresh_token;
 
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token not found');
@@ -95,11 +96,11 @@ export class AuthController {
 
     res.cookie('access_token', result, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: false, // false untuk HTTP localhost
+      sameSite: 'lax', // Ubah dari 'none' ke 'lax'
       maxAge: 15 * 60 * 1000,
+      path: '/', // Tambahkan ini
     });
-
     return {
       success: true,
       message: 'Token refreshed',

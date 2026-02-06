@@ -1,11 +1,14 @@
 import {
   CreditCard,
   FileText,
+  Inspect,
   LayoutDashboard,
   Package,
   Settings,
   ShoppingCart,
   Users,
+  Wallet,
+  WalletCards,
 } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -33,6 +36,12 @@ export const SIDEBAR_DATA: SidebarDataType[] = [
         children: [],
       },
       {
+        name: "Form-Fields",
+        link: "/dashboard/products/form-fields",
+        icon: <Inspect className="w-4 h-4" />,
+        children: [],
+      },
+      {
         name: "Categories",
         link: "/dashboard/products/categories",
         icon: <Package className="w-4 h-4" />,
@@ -52,23 +61,50 @@ export const SIDEBAR_DATA: SidebarDataType[] = [
       },
     ],
   },
-  {
-    name: "Orders",
-    link: "/dashboard/orders",
-    icon: <ShoppingCart className="w-5 h-5" />,
-    children: [],
-  },
+
   {
     name: "Transactions",
     link: "/dashboard/transactions",
     icon: <CreditCard className="w-5 h-5" />,
-    children: [],
+    children: [
+      {
+        name: "Orders",
+        link: "/dashboard/transactions/orders",
+        icon: <ShoppingCart className="w-5 h-5" />,
+        children: [],
+      },
+      {
+        name: "Payment Methods",
+        link: "/dashboard/transactions/payment-methods",
+        icon: <Wallet className="w-4 h-4" />,
+        children: [],
+      },
+      {
+        name: "Voucher",
+        link: "/dashboard/transactions/vouchers",
+        icon: <WalletCards className="w-4 h-4" />,
+        children: [],
+      },
+    ],
   },
   {
     name: "Users",
     link: "/dashboard/users",
     icon: <Users className="w-5 h-5" />,
-    children: [],
+    children: [
+      {
+        name: "All Users",
+        link: "/dashboard/users",
+        icon: <Users className="w-4 h-4" />,
+        children: [],
+      },
+      {
+        name: "Log Balance",
+        link: "/dashboard/users/log-balances",
+        icon: <WalletCards className="w-4 h-4" />,
+        children: [],
+      },
+    ],
   },
   {
     name: "Reports",

@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export type PaginationResponse = {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};
+
 /**
  * Base string validation with min/max
  */

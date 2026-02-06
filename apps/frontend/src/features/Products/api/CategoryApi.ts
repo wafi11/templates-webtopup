@@ -3,6 +3,7 @@ import {
   CreateCategory,
   DeleteCategory,
   FindCategories,
+  FindCategoryBySlug,
   UpdateCategory,
 } from "./EndpointCategoryApi";
 import { Categories, CategoryRequest, RequestParams } from "@repo/types";
@@ -25,6 +26,13 @@ export function useFindCategories(req: RequestParams) {
   return useQuery({
     queryKey: ["category", req],
     queryFn: () => FindCategories(req),
+  });
+}
+
+export function useFindCategoryBySlug(req: string) {
+  return useQuery({
+    queryKey: ["category-slug", req],
+    queryFn: () => FindCategoryBySlug(req),
   });
 }
 

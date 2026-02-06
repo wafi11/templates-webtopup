@@ -14,6 +14,7 @@ import { VoucherModule } from './modules/vouchers/voucher.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from './constants';
 import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transactions/transaction.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { AuthModule } from './modules/auth/auth.module';
     PaymentMethodModule,
     FormFieldsModule,
     VoucherModule,
+    TransactionModule,
   ],
   controllers: [],
   providers: [],

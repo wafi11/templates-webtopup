@@ -2,6 +2,9 @@ import { api } from "@/lib/api";
 import { ApiResponse } from "@/lib/types";
 import { RequestParams, SubProduct, SubProductRequest } from "@repo/types";
 
+export type FindSubProductsRequest = RequestParams & {
+  id: string;
+};
 export async function CreateSubProduct(
   req: SubProductRequest,
 ): Promise<ApiResponse<SubProduct>> {
@@ -10,11 +13,13 @@ export async function CreateSubProduct(
 }
 
 export async function FindSubProducts(
-  params: RequestParams,
+  params: FindSubProductsRequest,
 ): Promise<ApiResponse<SubProduct[]>> {
   const url = new URLSearchParams();
   url.append("limit", params.limit.toString());
   url.append("offset", params.offset.toString());
+  url.append("product_id", params.id.toString());
+
   if (params.search) {
     url.append("search", params.search);
   }

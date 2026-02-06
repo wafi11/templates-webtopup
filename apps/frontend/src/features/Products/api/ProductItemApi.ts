@@ -11,6 +11,7 @@ import {
   CreateProductItem,
   DeleteProductItem,
   FindProductItem,
+  FindProductItemOrder,
   UpdateProductItem,
 } from "./EndpointProductItems";
 
@@ -31,6 +32,20 @@ export function useFindProductItem(params: RequestParams) {
   return useQuery({
     queryKey: ["product-items", params],
     queryFn: () => FindProductItem(params),
+  });
+}
+
+export function useFindProductItemOrder({
+  req,
+}: {
+  req: {
+    product: number;
+    sub_product: number;
+  };
+}) {
+  return useQuery({
+    queryKey: ["product-items-order", req],
+    queryFn: () => FindProductItemOrder(req.product, req.sub_product),
   });
 }
 

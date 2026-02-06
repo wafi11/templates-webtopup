@@ -1,0 +1,30 @@
+POST http://localhost:5000/api/category
+Content-Type: application/json
+
+{
+    "name": "Populer",
+    "order": 3,
+    "is_active": true,
+    "icon": "Namesakuhaha"
+}
+
+############################
+GET http://localhost:5000/api/category?limit=10&offset=0
+Content-Type: application/json
+
+
+############################
+PUT http://localhost:5000/api/category/4
+Content-Type: application/json
+
+{
+    "name": "TEST KEDUA",
+    "order": 4,
+    "is_active": false,
+    "icon": "https:///"
+}
+
+############################
+DELETE  http://localhost:5000/api/category/6
+Content-Type: application/json
+

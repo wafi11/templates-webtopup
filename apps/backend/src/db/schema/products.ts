@@ -8,8 +8,10 @@ import {
   bigint,
   boolean,
   index,
+  decimal,
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
+import { rolesTable } from './users';
 
 // ============================================
 // CATEGORIES
@@ -147,7 +149,30 @@ export const productItemsTable = pgTable(
     ),
   }),
 );
-
+export const productItemsRoles = pgTable(
+  'product_items_roles',
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    product_items_id: integer().references(() => productItemsTable.id),
+    roles_id: integer().references(() => rolesTable.id),
+    margin_amount: integer().notNull().default(0),
+    margin_percentage: decimal({ precision: 10, scale: 2 })
+      .notNull()
+      .default('0'),
+    calculation_type: varchar({ length: 20 }).notNull().default('HYBRID'),
+    created_at: timestamp().defaultNow().notNull(),
+    updated_at: timestamp().defaultNow().notNull(),
+  },
+  (table) => ({
+    productItemRoleUniqueIdx: uniqueIndex(
+      'product_items_roles_composite_unique_idx',
+    ).on(table.product_items_id, table.roles_id),
+    productItemIdx: index('product_items_roles_product_item_idx').on(
+      table.product_items_id,
+    ),
+    roleIdx: index('product_items_roles_role_idx').on(table.roles_id),
+  }),
+);
 // ============================================
 // RELATIONS
 // ============================================

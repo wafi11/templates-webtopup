@@ -3,8 +3,8 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUser, RegisterAuth } from '@repo/types';
-import { eq } from 'drizzle-orm';
+import { CreateUser, PaginationResponse, RequestParams } from '@repo/types';
+import { count, eq, like } from 'drizzle-orm';
 import { InjectDb } from 'src/db/db.provider';
 import type { DB } from 'src/db/db.provider';
 import { usersTable } from 'src/db/schema';
@@ -32,7 +32,7 @@ export class UserRespository {
       .insert(usersTable)
       .values({
         ...req,
-        username: this.generateUsername(),
+        username: req.email.split('@')[0],
       })
       .returning();
 
@@ -41,6 +41,50 @@ export class UserRespository {
     }
 
     return true;
+  }
+
+  async FindAllUsers(req: RequestParams) {
+    const searchCondition = req.search
+      ? like(usersTable.username, `%${req.search}%`)
+      : undefined;
+
+    const [data, totalCount] = await Promise.all([
+      await this.db
+        .select({
+          id: usersTable.id,
+          fullname: usersTable.fullname,
+          username: usersTable.username,
+          email: usersTable.email,
+          email_verified: usersTable.email_verified,
+          image: usersTable.avatar_url,
+        })
+        .from(usersTable)
+        .limit(req.limit)
+        .offset(req.offset)
+        .where(searchCondition),
+      await this.db
+        .select({ count: count() })
+        .from(usersTable)
+        .limit(req.limit)
+        .offset(req.offset)
+        .where(searchCondition)
+        .then((result) => result[0].count),
+      ,
+    ]);
+    const currentPage = Math.floor(req.offset / req.limit) + 1;
+    const totalPages = Math.ceil(totalCount / req.limit);
+
+    return {
+      data,
+      meta: {
+        currentPage,
+        totalPages,
+        totalItems: totalCount,
+        itemsPerPage: req.limit,
+        hasNextPage: currentPage < totalPages,
+        hasPrevPage: currentPage > 1,
+      } as PaginationResponse,
+    };
   }
 
   async FindMe(id: number) {

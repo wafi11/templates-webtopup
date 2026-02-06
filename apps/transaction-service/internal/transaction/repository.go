@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"time"
 )
@@ -17,7 +18,7 @@ func NewRepository(db *sql.DB, duitku *DuitkuService) Repository {
 	return Repository{db: db, duitkuService: duitku}
 }
 
-func (r *Repository) Create(c context.Context, request TransactionRequest, define DefineRequest) (*TransactionCreateResponse, MessageResponse, ErrorCode) {
+func (r *Repository) Create(c context.Context, request TransactionRequest, define DefineRequest, transactionId string) (*TransactionCreateResponse, MessageResponse, ErrorCode) {
 	tx, err := r.db.BeginTx(c, &sql.TxOptions{
 		Isolation: sql.LevelDefault,
 		ReadOnly:  false,
@@ -42,15 +43,18 @@ func (r *Repository) Create(c context.Context, request TransactionRequest, defin
 		return nil, message, code
 	}
 
+	var voucher *ValidationVoucherReturn
+	if request.VoucherCode != "" {
+		voucher = r.validationVoucher(c, tx, request.VoucherCode, product.BasePrice)
+		product.BasePrice = product.BasePrice - voucher.TotalDiscount
+	}
+
 	// 3. Validate payment method
 	payment, message, code := r.validationPaymentMethod(c, product.BasePrice, request.PaymentCode)
 	if code != CODE_VALIDATION_SUCCESS {
 		err = sql.ErrTxDone
 		return nil, message, code
 	}
-
-	// 4. Generate transaction ID
-	transactionId := generateRandomId()
 
 	logRequest := map[string]interface{}{
 		"PaymentAmount":   int(payment.TotalAmount),
@@ -60,19 +64,6 @@ func (r *Repository) Create(c context.Context, request TransactionRequest, defin
 	}
 	logRequestJSON, _ := json.Marshal(logRequest)
 
-	// 5. Create Duitku transaction SEBELUM commit database
-	responseDuitku, err := r.duitkuService.CreateTransaction(c, &DuitkuCreateTransactionParams{
-		PaymentAmount:   int(payment.TotalAmount),
-		MerchantOrderId: transactionId,
-		PaymentCode:     request.PaymentCode,
-		CallbackUrl:     "http://localhost:7000",
-	})
-
-	if err != nil {
-		log.Printf("duitku create transaction failed: %v", err)
-		return nil, PAYMENT_GATEWAY_ERROR, CODE_PAYMENT_GATEWAY_ERROR
-	}
-
 	metadata := map[string]interface{}{
 		"product_name":   product.ProductName,
 		"customer_phone": request.CustomerPhone,
@@ -81,13 +72,10 @@ func (r *Repository) Create(c context.Context, request TransactionRequest, defin
 			"ip_address": define.IpAddress,
 		},
 	}
-	log.Println("response duitku : ", responseDuitku)
 
 	metadataJSON, _ := json.Marshal(metadata)
-	logResponseJSON, _ := json.Marshal(responseDuitku)
-	paymentURL := firstNonEmpty(responseDuitku.QrString, responseDuitku.VANumber, responseDuitku.PaymentUrl)
 
-	// // 6. Insert transaction ke database
+	// 5. Insert transaction ke database
 	r.InsertTransaction(c, tx, InsertTransaction{
 		DefineRequest:      define,
 		TransactionRequest: request,
@@ -104,11 +92,11 @@ func (r *Repository) Create(c context.Context, request TransactionRequest, defin
 		Total:              payment.TotalAmount,
 		Metadata:           string(metadataJSON),
 		LogRequest:         string(logRequestJSON),
-		LogResponse:        string(logResponseJSON),
-		PaymentUrl:         paymentURL,
+		LogResponse:        "",
+		PaymentUrl:         "",
 	})
 
-	// 7. Commit transaction
+	// 6. Commit transaction
 	if err = tx.Commit(); err != nil {
 		log.Printf("failed to commit transaction: %v", err)
 		return nil, TRANSACTION_CANCELLED, CODE_TRANSACTION_CANCELLED
@@ -116,6 +104,77 @@ func (r *Repository) Create(c context.Context, request TransactionRequest, defin
 
 	// 8. Return response
 	return &TransactionCreateResponse{ReferenceID: transactionId}, VALIDATION_SUCCESS, CODE_VALIDATION_SUCCESS
+}
+func (r *Repository) PushToPaymentGateway(c context.Context, transactionId string) error {
+	// 1. Start database transaction
+	tx, err := r.db.BeginTx(c, nil)
+	if err != nil {
+		log.Printf("failed to begin transaction: %v", err)
+		return err
+	}
+	defer tx.Rollback() // Auto rollback kalau ada error
+
+	// 2. Get transaction data
+	var total int64
+	var paymentCode string
+	query := `
+		SELECT 
+			total,
+			payment_code 
+		FROM transactions 
+		WHERE invoice_number = $1  
+	`
+	err = tx.QueryRowContext(c, query, transactionId).Scan(&total, &paymentCode)
+	if err != nil {
+		log.Printf("failed to get transaction: %v", err)
+		return err
+	}
+
+	// 3. Create Duitku transaction (external API call - SEBELUM commit)
+	responseDuitku, err := r.duitkuService.CreateTransaction(c, &DuitkuCreateTransactionParams{
+		PaymentAmount:   int(total),
+		MerchantOrderId: transactionId,
+		PaymentCode:     paymentCode,
+		CallbackUrl:     "http://localhost:7000/callback/duitku",
+	})
+	if err != nil {
+		log.Printf("duitku create transaction failed: %v", err)
+		return fmt.Errorf("payment gateway error: %w", err)
+	}
+
+	// 4. Prepare response data
+	logResponseJSON, _ := json.Marshal(responseDuitku)
+	paymentURL := firstNonEmpty(responseDuitku.QrString, responseDuitku.VANumber, responseDuitku.PaymentUrl)
+
+	// 5. Update transaction dengan response dari Duitku
+	updateQuery := `
+		UPDATE transactions 
+		SET 
+			log_response = $1,
+			payment_url = $2,
+			external_id = $3,
+			updated_at = NOW()
+		WHERE invoice_number = $4
+	`
+	_, err = tx.ExecContext(c, updateQuery,
+		string(logResponseJSON),
+		paymentURL,
+		responseDuitku.Reference,
+		transactionId,
+	)
+	if err != nil {
+		log.Printf("failed to update transaction: %v", err)
+		return err
+	}
+
+	// 6. Commit transaction - semua sukses!
+	if err = tx.Commit(); err != nil {
+		log.Printf("failed to commit transaction: %v", err)
+		return err
+	}
+
+	log.Printf("successfully pushed transaction %s to payment gateway", transactionId)
+	return nil
 }
 
 func (r *Repository) InsertTransaction(c context.Context, tx *sql.Tx, req InsertTransaction) (MessageResponse, ErrorCode) {

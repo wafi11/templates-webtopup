@@ -6,6 +6,12 @@ const nextConfig = {
       {
         hostname: "res.cloudinary.com",
       },
+      {
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        hostname: "www.veinstore.id",
+      },
     ],
   },
 };
