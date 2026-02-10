@@ -13,14 +13,6 @@ import { usersTable } from 'src/db/schema';
 export class UserRespository {
   constructor(@InjectDb() private db: DB) {}
 
-  private generateUsername(): string {
-    const array = new Uint8Array(10);
-    crypto.getRandomValues(array);
-    return Array.from(array, (byte) => byte.toString(36))
-      .join('')
-      .substring(0, 10);
-  }
-
   async Create(req: CreateUser): Promise<boolean> {
     const validateUser = await this.FindUsersByEmail(req.email);
 
@@ -33,6 +25,7 @@ export class UserRespository {
       .values({
         ...req,
         username: req.email.split('@')[0],
+        role_id: 2,
       })
       .returning();
 

@@ -9,9 +9,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ClassProductRequest, ClassRequestParamsProduct } from './product.dto';
 import { ProductService } from './product.service';
-import { ClassProductRequest } from './product.dto';
-import { ClassRequestParams } from './categories/categories.dto';
 
 @Controller('product')
 export class ProductController {
@@ -22,8 +21,17 @@ export class ProductController {
   }
 
   @Get()
-  async FindAll(@Query() req: ClassRequestParams) {
-    return this.svc.FindAll(req);
+  async FindAll(@Query() req: ClassRequestParamsProduct) {
+    return this.svc.FindAll(req, req.category);
+  }
+
+  @Get('search')
+  async Search(
+    @Query('query') query: string,
+    @Query('limit') limit: string,
+    @Query('cursor') cursor?: string,
+  ) {
+    return this.svc.Search(query, parseInt(limit), cursor);
   }
 
   @Get(':slug')

@@ -1,4 +1,10 @@
 import { IsBoolean, IsInt, IsString } from 'class-validator';
+import { ClassRequestParams } from './categories/categories.dto';
+
+export class ClassRequestParamsProduct extends ClassRequestParams {
+  @IsString()
+  category: string;
+}
 
 export class ClassProductRequest {
   @IsString()

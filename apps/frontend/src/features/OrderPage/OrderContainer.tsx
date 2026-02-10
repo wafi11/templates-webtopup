@@ -48,6 +48,8 @@ export function OrderContainer({
     voucherCode,
     setVoucherCode,
     total,
+    nickname,
+    setNickname,
     clearData,
   } = useStoreOrder();
 
@@ -98,6 +100,7 @@ export function OrderContainer({
               <div className="flex flex-col gap-4">
                 <FormFieldsContainer
                   gameId={gameId}
+                  setNickname={setNickname}
                   productId={productId}
                   setGameId={setGameId}
                   setZoneId={setZoneId}
@@ -150,6 +153,7 @@ export function OrderContainer({
             <div className="col-span-2 col-start-1 flex flex-col gap-8">
               <FormFieldsContainer
                 gameId={gameId}
+                setNickname={setNickname}
                 productId={productId}
                 setGameId={setGameId}
                 setZoneId={setZoneId}
@@ -206,7 +210,7 @@ export function OrderContainer({
             item: product.name,
             payment: method.name,
             product: productName,
-            nickname: "W F D N",
+            nickname,
           }}
           referenceId={referenceId as string}
           setOpen={(open) => {

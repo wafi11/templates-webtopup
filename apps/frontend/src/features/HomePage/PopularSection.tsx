@@ -4,11 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 export function PopularSection() {
-  const data = useFindProducts({
-    limit: 10,
-    offset: 0,
-    search: null,
-  });
+  const data = useFindProducts(
+    {
+      limit: 10,
+      offset: 0,
+      search: null,
+    },
+    2,
+  );
   return (
     <SectionContainer className="flex flex-col gap-y-8 pt-8 lg:min-h-[0]">
       <div className="container">
@@ -38,13 +41,13 @@ export function PopularSection() {
                     height={100}
                     src={
                       item.thumbnail ??
-                      "https://www.ourastore.com/_next/image?url=https://cdn.ourastore.com/ourastore.com/product/MLBBIndofix-ezgif.com-optijpeg.jpg&w=1920&q=75"
+                      "https://id.wikipedia.org/wiki/Telkomsel#/media/Berkas:Telkomsel_(2021).svg"
                     }
                     className="aspect-square h-14 w-14 rounded-[calc(var(--card-radius)-var(--card-padding))] object-cover object-center duration-300 group-hover/product-card:scale-110 group-hover/product-card:rounded-xl group-hover/product-card:shadow-2xl md:h-20 md:w-20"
                   />
                   <div className="relative flex w-full flex-col">
                     <h2 className="w-[80px] truncate text-[12px] font-semibold text-foreground sm:w-[125px] md:w-[150px] md:text-base lg:w-[175px]">
-                      Mobile Legends
+                      {item.name}
                     </h2>
                     <p className="text-[12px] text-foreground md:text-sm">
                       {item.sub_name}

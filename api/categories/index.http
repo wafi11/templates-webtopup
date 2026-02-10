@@ -2,10 +2,10 @@ POST http://localhost:5000/api/category
 Content-Type: application/json
 
 {
-    "name": "Populer",
-    "order": 3,
+    "name": "Langganan",
+    "order": 4,
     "is_active": true,
-    "icon": "Namesakuhaha"
+    "icon": ""
 }
 
 ############################
@@ -14,14 +14,14 @@ Content-Type: application/json
 
 
 ############################
-PUT http://localhost:5000/api/category/4
+PUT http://localhost:5000/api/category/1
 Content-Type: application/json
 
 {
-    "name": "TEST KEDUA",
-    "order": 4,
-    "is_active": false,
-    "icon": "https:///"
+    "name": "Populer",
+    "order": 1,
+    "is_active": true,
+    "icon": ""
 }
 
 ############################

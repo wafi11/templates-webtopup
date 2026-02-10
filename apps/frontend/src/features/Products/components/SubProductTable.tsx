@@ -32,11 +32,11 @@ export function SubProductTable({
       <TableHeader>
         <TableRow>
           <TableHead>Id</TableHead>
-          <TableHead>Sub Product Name</TableHead>
-          <TableHead>Sub Product Code</TableHead>
-          <TableHead>Sub Product Icon</TableHead>
-          <TableHead>Sub Product Order</TableHead>
-          <TableHead>Sub Product Active</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Code</TableHead>
+          <TableHead>Icon</TableHead>
+          <TableHead>Order</TableHead>
+          <TableHead>Active</TableHead>
           <TableHead>Terbuat</TableHead>
           <TableHead>TerUpdate</TableHead>
           <TableHead>Action</TableHead>

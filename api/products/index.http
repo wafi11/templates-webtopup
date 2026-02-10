@@ -2,20 +2,24 @@ POST http://localhost:5000/api/product
 Content-Type: application/json
 
 {
-    "bannerImage": "http://127.0.0.1:9000/webtopup/PromoDetailBanner_old_desktop_Freefire.webp",
-    "categoryId": 9,
-    "code": "Telkomsel",
-    "description": "Telkomsel",
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Roblox_Logo.svg/1200px-Roblox_Logo.svg.png",
+    "categoryId": 2,
+    "code": "ROBUX",
+    "description": "Top up Robux untuk Roblox game. Dapatkan Robux instan untuk membeli item, aksesoris, dan fitur premium di Roblox.",
     "isActive": true,
-    "name": "Telkomsel",
-    "order": 1,
-    "slug": "Telkomsel",
-    "thumbnail": "http://127.0.0.1:9000/webtopup/unnamed.png",
-    "subName": "Telkomsel Indonesia"
+    "name": "Robux",
+    "order": 2,
+    "slug": "robux",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Roblox_Logo.svg/500px-Roblox_Logo.svg.png",
+    "subName": "Roblox Robux"
 }
 
 ############################
 GET http://localhost:5000/api/product?limit=10&offset=0
+Content-Type: application/json
+
+############################
+GET http://localhost:5000/api/product/search?limit=10&query=Tel
 Content-Type: application/json
 ############################
 GET http://localhost:5000/api/product/digiflazz

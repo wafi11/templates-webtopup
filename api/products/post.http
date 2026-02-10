@@ -1,0 +1,354 @@
+# ============================================
+# CATEGORY 1: GAMES - Mobile Legends
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Mobile_Legends_Bang_Bang_logo.jpg/1200px-Mobile_Legends_Bang_Bang_logo.jpg",
+    "categoryId": 1,
+    "code": "MLBB",
+    "description": "Top up Diamond Mobile Legends tercepat dan termurah",
+    "isActive": true,
+    "name": "Mobile Legends",
+    "order": 1,
+    "slug": "MOBILE LEGENDS",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Mobile_Legends_Bang_Bang_logo.jpg/300px-Mobile_Legends_Bang_Bang_logo.jpg",
+    "subName": "Bang Bang"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - Free Fire
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/Garena_Free_Fire_Cover_Art.jpg/1200px-Garena_Free_Fire_Cover_Art.jpg",
+    "categoryId": 1,
+    "code": "FF",
+    "description": "Top up Diamond Free Fire cepat dan aman",
+    "isActive": true,
+    "name": "Free Fire",
+    "order": 2,
+    "slug": "FREE FIRE",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/Garena_Free_Fire_Cover_Art.jpg/300px-Garena_Free_Fire_Cover_Art.jpg",
+    "subName": "Garena"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - PUBG Mobile
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/PUBG_Mobile_logo.jpg/1200px-PUBG_Mobile_logo.jpg",
+    "categoryId": 1,
+    "code": "PUBGM",
+    "description": "Top up UC PUBG Mobile resmi dan terpercaya",
+    "isActive": true,
+    "name": "PUBG Mobile",
+    "order": 3,
+    "slug": "PUBG MOBILE",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/PUBG_Mobile_logo.jpg/300px-PUBG_Mobile_logo.jpg",
+    "subName": "Global"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - Genshin Impact
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Genshin_Impact_logo.svg/1200px-Genshin_Impact_logo.svg.png",
+    "categoryId": 1,
+    "code": "GENSHIN",
+    "description": "Top up Genesis Crystal Genshin Impact",
+    "isActive": true,
+    "name": "Genshin Impact",
+    "order": 4,
+    "slug": "GENSHIN IMPACT",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Genshin_Impact_logo.svg/300px-Genshin_Impact_logo.svg.png",
+    "subName": "miHoYo"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - Valorant
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Valorant_logo_-_pink_color_version.svg/1200px-Valorant_logo_-_pink_color_version.svg.png",
+    "categoryId": 1,
+    "code": "VALORANT",
+    "description": "Top up Valorant Points (VP) instant",
+    "isActive": true,
+    "name": "Valorant",
+    "order": 5,
+    "slug": "VALORANT",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Valorant_logo_-_pink_color_version.svg/300px-Valorant_logo_-_pink_color_version.svg.png",
+    "subName": "Riot Games"
+}
+
+###
+
+# ============================================
+# CATEGORY 3: PULSA - Indosat
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Indosat_Ooredoo_Hutchison_logo.svg/1200px-Indosat_Ooredoo_Hutchison_logo.svg.png",
+    "categoryId": 3,
+    "code": "INDOSAT",
+    "description": "Pulsa Indosat Ooredoo instant",
+    "isActive": true,
+    "name": "Indosat",
+    "order": 2,
+    "slug": "Indosat",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Indosat_Ooredoo_Hutchison_logo.svg/300px-Indosat_Ooredoo_Hutchison_logo.svg.png",
+    "subName": "Ooredoo Hutchison"
+}
+
+###
+
+# ============================================
+# CATEGORY 3: PULSA - XL Axiata
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/XL_Axiata_2021_logo.svg/1200px-XL_Axiata_2021_logo.svg.png",
+    "categoryId": 3,
+    "code": "XL",
+    "description": "Pulsa XL Axiata termurah",
+    "isActive": true,
+    "name": "XL Axiata",
+    "order": 3,
+    "slug": "XL",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/XL_Axiata_2021_logo.svg/300px-XL_Axiata_2021_logo.svg.png",
+    "subName": "Indonesia"
+}
+
+###
+
+# ============================================
+# CATEGORY 3: PULSA - Tri (3)
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/3_%28통신사%29_logo.svg/1200px-3_%28통신사%29_logo.svg.png",
+    "categoryId": 3,
+    "code": "TRI",
+    "description": "Pulsa Tri Indonesia",
+    "isActive": true,
+    "name": "Tri",
+    "order": 4,
+    "slug": "Tri",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/3_%28통신사%29_logo.svg/300px-3_%28통신사%29_logo.svg.png",
+    "subName": "3 Indonesia"
+}
+
+###
+
+# ============================================
+# CATEGORY 4: VOUCHER - Google Play
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1200px-Google_Play_Store_badge_EN.svg.png",
+    "categoryId": 4,
+    "code": "GOOGLEPLAY",
+    "description": "Google Play Gift Card Indonesia",
+    "isActive": true,
+    "name": "Google Play",
+    "order": 1,
+    "slug": "Google Play",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/300px-Google_Play_Store_badge_EN.svg.png",
+    "subName": "Gift Card"
+}
+
+###
+
+# ============================================
+# CATEGORY 4: VOUCHER - Steam Wallet
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1200px-Steam_icon_logo.svg.png",
+    "categoryId": 4,
+    "code": "STEAM",
+    "description": "Steam Wallet Code Indonesia",
+    "isActive": true,
+    "name": "Steam Wallet",
+    "order": 2,
+    "slug": "steam-wallet",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/300px-Steam_icon_logo.svg.png",
+    "subName": "Valve"
+}
+
+###
+
+# ============================================
+# CATEGORY 4: VOUCHER - iTunes/App Store
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/App_Store_%28iOS%29.svg/1200px-App_Store_%28iOS%29.svg.png",
+    "categoryId": 4,
+    "code": "APPSTORE",
+    "description": "iTunes Gift Card / App Store Gift Card",
+    "isActive": true,
+    "name": "App Store",
+    "order": 3,
+    "slug": "app-store",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/App_Store_%28iOS%29.svg/300px-App_Store_%28iOS%29.svg.png",
+    "subName": "Apple"
+}
+
+###
+
+# ============================================
+# CATEGORY 5: LANGGANAN - Netflix
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1200px-Netflix_2015_logo.svg.png",
+    "categoryId": 5,
+    "code": "NETFLIX",
+    "description": "Subscription Netflix Premium",
+    "isActive": true,
+    "name": "Netflix",
+    "order": 1,
+    "slug": "Netflix",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/300px-Netflix_2015_logo.svg.png",
+    "subName": "Premium"
+}
+
+###
+
+# ============================================
+# CATEGORY 5: LANGGANAN - Spotify
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1200px-Spotify_logo_without_text.svg.png",
+    "categoryId": 5,
+    "code": "SPOTIFY",
+    "description": "Spotify Premium Subscription",
+    "isActive": true,
+    "name": "Spotify",
+    "order": 2,
+    "slug": "Spotify",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/300px-Spotify_logo_without_text.svg.png",
+    "subName": "Premium"
+}
+
+###
+
+# ============================================
+# CATEGORY 5: LANGGANAN - YouTube Premium
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png",
+    "categoryId": 5,
+    "code": "YTPREMIUM",
+    "description": "YouTube Premium Subscription",
+    "isActive": true,
+    "name": "YouTube Premium",
+    "order": 3,
+    "slug": "Youtube Premium",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/300px-YouTube_full-color_icon_%282017%29.svg.png",
+    "subName": "Google"
+}
+
+###
+
+# ============================================
+# CATEGORY 5: LANGGANAN - Disney+ Hotstar
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Disney%2B_Hotstar_logo.svg/1200px-Disney%2B_Hotstar_logo.svg.png",
+    "categoryId": 5,
+    "code": "DISNEYPLUS",
+    "description": "Disney+ Hotstar Premium Subscription",
+    "isActive": true,
+    "name": "Disney+ Hotstar",
+    "order": 4,
+    "slug": "Disney Plus Hotstar",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Disney%2B_Hotstar_logo.svg/300px-Disney%2B_Hotstar_logo.svg.png",
+    "subName": "Premium"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - Arena of Valor
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Arena_of_Valor_logo.png/1200px-Arena_of_Valor_logo.png",
+    "categoryId": 1,
+    "code": "AOV",
+    "description": "Top up Voucher Arena of Valor",
+    "isActive": true,
+    "name": "Arena of Valor",
+    "order": 6,
+    "slug": "arena-of-valor",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Arena_of_Valor_logo.png/300px-Arena_of_Valor_logo.png",
+    "subName": "Garena"
+}
+
+###
+
+# ============================================
+# CATEGORY 1: GAMES - Clash of Clans
+# ============================================
+POST http://localhost:5000/api/product
+Content-Type: application/json
+
+{
+    "bannerImage": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Clash_of_Clans_Logo.png/1200px-Clash_of_Clans_Logo.png",
+    "categoryId": 1,
+    "code": "COC",
+    "description": "Top up Gems Clash of Clans",
+    "isActive": true,
+    "name": "Clash of Clans",
+    "order": 7,
+    "slug": "Clash Of Clans",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Clash_of_Clans_Logo.png/300px-Clash_of_Clans_Logo.png",
+    "subName": "Supercell"
+}

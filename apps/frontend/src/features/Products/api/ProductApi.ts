@@ -1,10 +1,11 @@
 import { Product, ProductRequest, RequestParams } from "@repo/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   CreateProducts,
   DeleteProduct,
   FindProducts,
+  FindSearchProducts,
   UpdateProducts,
 } from "./EndpointProductApi";
 
@@ -20,11 +21,26 @@ export function useCreateProduct() {
     },
   });
 }
-
-export function useFindProducts(params: RequestParams) {
+export function useSearchProducts(search: string, limit: number) {
+  return useInfiniteQuery({
+    queryKey: ["search-products", search, limit],
+    queryFn: ({ pageParam }) =>
+      FindSearchProducts({
+        limit,
+        search,
+        cursor: pageParam,
+      }),
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.nextCursor ?? undefined;
+    },
+    initialPageParam: undefined as number | undefined,
+    enabled: search.length > 0,
+  });
+}
+export function useFindProducts(params: RequestParams, category: number) {
   return useQuery({
-    queryKey: ["products", params],
-    queryFn: () => FindProducts(params),
+    queryKey: ["products", params, category],
+    queryFn: () => FindProducts(params, category.toString()),
   });
 }
 

@@ -5,6 +5,6 @@ type FilterProduct = {
 };
 
 export const useFilterProduct = create<FilterProduct>((set) => ({
-  category: null,
+  category: 0,
   setCategory: (cat) => set({ category: cat }),
 }));

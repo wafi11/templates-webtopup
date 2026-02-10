@@ -139,4 +139,5 @@ export type FormFields = {
   value: string;
   type: string;
   values_option: string | null;
+  product_name? : string | null
 };

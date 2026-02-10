@@ -1,16 +1,12 @@
-import { ProductRequest, RequestParams } from '@repo/types';
-import { ProductRepository } from './product.repository';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ProductRequest, RequestParams } from '@repo/types';
 import { Digiflazz } from 'src/integrations/digiflazz/http.request';
-import { CategoriesRepositories } from './categories/categories.repository';
-import { SubProductRepository } from './subproducts/subproduct.repository';
+import { ProductRepository } from './product.repository';
 
 @Injectable()
 export class ProductService {
   constructor(
     private repo: ProductRepository,
-    private categories: CategoriesRepositories,
-    private subProducts: SubProductRepository,
     private digiflazz: Digiflazz,
   ) {}
 
@@ -22,8 +18,16 @@ export class ProductService {
     return await this.repo.FindBySlug(req);
   }
 
-  async FindAll(req: RequestParams) {
-    return await this.repo.FindAll(req);
+  async Search(search: string, limit: number, cursor?: string) {
+    return await this.repo.SearchProducts(search, limit, cursor);
+  }
+
+  async FindAll(req: RequestParams, category: string) {
+    const parseCategory = parseInt(category);
+    if (typeof parseCategory != 'number') {
+      throw new BadRequestException('Category Must Be Number');
+    }
+    return await this.repo.FindAll(req, parseCategory);
   }
 
   async Update(req: ProductRequest, id: number) {

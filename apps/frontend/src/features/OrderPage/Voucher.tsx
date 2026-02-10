@@ -1,8 +1,11 @@
+import { TicketPercent } from "lucide-react";
 import { SectionContainer } from "./SectionContainer";
+
 interface SectionVoucherProps {
   voucherCode?: string;
   setVoucherCode: (vc: string) => void;
 }
+
 export function SectionVoucher({
   setVoucherCode,
   voucherCode,
@@ -38,23 +41,7 @@ export function SectionVoucher({
               className="inline-flex items-center justify-center whitespace-nowrap transition-all rounded-lg shadow-sm text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-8 rounded-lg px-4 gap-2 pl-3"
               type="button"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className="lucide lucide-ticket-percent h-4 w-4"
-              >
-                <path d="M2 9a3 3 0 1 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
-                <path d="M9 9h.01"></path>
-                <path d="m15 9-6 6"></path>
-                <path d="M15 15h.01"></path>
-              </svg>
+              <TicketPercent size={17} />
               <span>Pakai Promo Yang Tersedia</span>
             </button>
           </div>

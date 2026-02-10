@@ -3,7 +3,7 @@ import { ApiResponse } from "@/lib/types";
 import { RequestParams, SubProduct, SubProductRequest } from "@repo/types";
 
 export type FindSubProductsRequest = RequestParams & {
-  id: string;
+  id?: string;
 };
 export async function CreateSubProduct(
   req: SubProductRequest,
@@ -18,7 +18,9 @@ export async function FindSubProducts(
   const url = new URLSearchParams();
   url.append("limit", params.limit.toString());
   url.append("offset", params.offset.toString());
-  url.append("product_id", params.id.toString());
+  if (params.id) {
+    url.append("product_id", params.id.toString());
+  }
 
   if (params.search) {
     url.append("search", params.search);

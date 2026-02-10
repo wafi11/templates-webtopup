@@ -2,8 +2,8 @@ import { useFindPaymentMethod } from "../Transactions/PaymentMethods/api/Payment
 import { SectionContainer } from "./SectionContainer";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { MethodOrder } from "../Transactions/Transaction/hooks/useOrder";
 import Image from "next/image";
+import { MethodOrder } from "../Transactions/Transaction/types";
 
 interface SectionPaymentMethodProps {
   method: MethodOrder;
@@ -83,7 +83,7 @@ export function SectionPaymentMethod({
                     >
                       <div className="flex items-center gap-3">
                         <span className="font-semibold text-sm sm:text-base">
-                          {methodType}
+                          {methodType.toUpperCase().replaceAll("_", " ")}
                         </span>
                         {/* Preview images saat collapsed */}
                         {!expandedMethods.includes(methodType) && (

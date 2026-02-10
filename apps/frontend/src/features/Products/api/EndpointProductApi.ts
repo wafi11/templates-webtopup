@@ -9,15 +9,43 @@ export async function CreateProducts(
   return request.data;
 }
 
+export async function FindSearchProducts(req: {
+  limit: number;
+  search: string;
+  cursor?: number;
+}): Promise<
+  ApiResponse<{
+    data: { id: number; name: string }[];
+    nextCursor: number | null;
+  }>
+> {
+  const url = new URLSearchParams();
+  url.append("limit", req.limit.toString());
+  url.append("search", req.search);
+  if (req.cursor) {
+    url.append("cursor", req.cursor.toString());
+  }
+  const request = await api.get<
+    ApiResponse<{
+      data: { id: number; name: string }[];
+      nextCursor: number | null;
+    }>
+  >(`/product/search?${url}`);
+  return request.data;
+}
+
 export async function FindProducts(
   params: RequestParams,
+  category_id: string,
 ): Promise<ApiResponse<Product[]>> {
   const url = new URLSearchParams();
   url.append("limit", params.limit.toString());
   url.append("offset", params.offset.toString());
+  url.append("category", category_id ?? "0");
   if (params.search) {
     url.append("search", params.search);
   }
+
   const request = await api.get<ApiResponse<Product[]>>(
     `/product?${url.toString()}`,
   );

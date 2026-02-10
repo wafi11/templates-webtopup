@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { FormFieldsService } from './form-fields.service';
 import { ClassRequestFormFields } from './form-fields.dto';
-import { ClassRequestParams, FormFields } from '@repo/types';
 import { IsNumberString, IsOptional } from 'class-validator';
+import { ClassRequestParams } from '../categories/categories.dto';
 
 export class SubProduct extends ClassRequestParams {
   @IsOptional()
@@ -36,7 +36,7 @@ export class FormFieldsController {
         offset: req.offset,
         search: req.search as string,
       },
-      parseInt(req.product_id),
+      parseInt(req.product_id ?? 0),
     );
   }
 

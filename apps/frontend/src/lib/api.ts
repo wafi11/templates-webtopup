@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 import { ApiResponse } from "./types";
+import { API_URL } from "@/constants";
 
 interface BackendResponse<T> {
   message: string;
@@ -24,7 +25,7 @@ export class Api {
 
   constructor() {
     this.instance = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      baseURL: API_URL,
       withCredentials: true,
       headers: {
         // Authorization: `Bearer ${authStore.getAccessToken()}`,

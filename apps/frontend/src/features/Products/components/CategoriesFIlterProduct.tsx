@@ -3,30 +3,38 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
 import { useFindCategories } from "../api/CategoryApi";
-import { useResizeCategoryFilter } from "../hooks/useResizeCategoriesFIlter";
 
-export function CategoriesFilterProduct() {
+interface CategoriesFilterProductProps {
+  canScrollLeft: boolean;
+  canScrollRight: boolean;
+  checkScroll: () => void;
+  scroll: (direction: "left" | "right") => void;
+  scrollContainerRef: React.RefObject<HTMLDivElement>;
+  selectedCategory: number | null;
+  setSelectedCategory: (id: number | null) => void;
+}
+
+export function CategoriesFilterProduct({
+  canScrollLeft,
+  canScrollRight,
+  checkScroll,
+  scroll,
+  scrollContainerRef,
+  selectedCategory,
+  setSelectedCategory,
+}: CategoriesFilterProductProps) {
   const { data, isLoading } = useFindCategories({
     limit: 10,
     offset: 0,
     search: null,
   });
   const categoriesData = data?.data ?? [];
-  const {
-    canScrollLeft,
-    canScrollRight,
-    checkScroll,
-    scroll,
-    scrollContainerRef,
-    selectedCategory,
-    setSelectedCategory,
-  } = useResizeCategoryFilter();
 
   useEffect(() => {
     setTimeout(checkScroll, 100);
     window.addEventListener("resize", checkScroll);
     return () => window.removeEventListener("resize", checkScroll);
-  }, [categoriesData]);
+  }, [categoriesData, checkScroll]);
 
   // Loading state
   if (isLoading) {
@@ -56,15 +64,16 @@ export function CategoriesFilterProduct() {
   return (
     <div className="w-full py-2">
       <div className="flex items-center gap-2">
-        {/* Tombol Kiri - Always visible on desktop untuk testing */}
+        {/* Tombol Kiri */}
         <Button
           type="button"
           variant="outline"
           size="icon"
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
-          className="lg:hidden flex h-9 w-9 shrink-0 rounded-full transition-opacity duration-300"
-          style={{ opacity: canScrollLeft ? 1 : 0.3 }}
+          className={`h-9 w-9 shrink-0 rounded-full transition-all duration-300 ${
+            canScrollLeft ? "flex" : "hidden lg:flex lg:opacity-30"
+          }`}
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -73,11 +82,7 @@ export function CategoriesFilterProduct() {
         <div
           ref={scrollContainerRef}
           onScroll={checkScroll}
-          className="flex flex-1 items-center gap-2 overflow-x-auto scroll-smooth md:gap-3"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
+          className="flex flex-1 items-center gap-2 overflow-x-auto scroll-smooth md:gap-3 hide-scrollbar"
         >
           {/* Button Semua */}
           <Button
@@ -103,19 +108,30 @@ export function CategoriesFilterProduct() {
           ))}
         </div>
 
-        {/* Tombol Kanan - Always visible on desktop untuk testing */}
+        {/* Tombol Kanan */}
         <Button
           type="button"
           variant="outline"
           size="icon"
           onClick={() => scroll("right")}
           disabled={!canScrollRight}
-          className="lg:hidden flex h-9 w-9 shrink-0 rounded-full transition-opacity duration-300"
-          style={{ opacity: canScrollRight ? 1 : 0.3 }}
+          className={`h-9 w-9 shrink-0 rounded-full transition-all duration-300 ${
+            canScrollRight ? "flex" : "hidden lg:flex lg:opacity-30"
+          }`}
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 }

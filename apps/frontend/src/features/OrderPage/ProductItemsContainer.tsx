@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/utils/FormatTimestamp";
+import { formatCurrency, formatPrice } from "@/utils/FormatTimestamp";
 import { SvgOrder } from "@/utils/svg";
 import { Check, Info } from "lucide-react";
 import Image from "next/image";
@@ -83,7 +83,7 @@ export function ProductItemsContainer({
         {/* Product Items Grid */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
           {productItemsData?.data
-            ?.filter((item) => item.is_active && item.stock > 0)
+            // ?.filter((item) => item.is_active && item.stock > 0)
             ?.sort((a, b) => a.order - b.order)
             ?.map((item) => {
               const discount = calculateDiscount(
@@ -145,7 +145,7 @@ export function ProductItemsContainer({
                               </span>
                             )}
                             <span className="flex items-center text-[14px] font-semibold text-primary md:text-[16px]">
-                              {formatPrice(
+                              {formatCurrency(
                                 item.discount_price || item.base_price,
                               )}
                             </span>

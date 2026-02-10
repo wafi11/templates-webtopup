@@ -12,6 +12,18 @@ const nextConfig = {
       {
         hostname: "www.veinstore.id",
       },
+      {
+        hostname: "www.exjstore.web.id",
+      },
+      {
+        hostname: "images.ctfassets.net",
+      },
+      {
+        hostname: "id.wikipedia.org",
+      },
+      {
+        hostname: "localhost",
+      },
     ],
   },
 };

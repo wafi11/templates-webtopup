@@ -14,17 +14,20 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <div className="group relative overflow-hidden rounded-2xl bg-muted transition-all duration-300 ease-in-out hover:shadow-2xl hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background">
         {/* Image Container dengan aspect ratio */}
-        <div className="relative w-full aspect-[4/6] overflow-hidden">
+        <div className="relative w-full aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
           {product.thumbnail ? (
             <Image
               src={product.thumbnail}
               alt={product.name}
               fill
-              className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 20vw"
+              className="bg-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+              priority={false}
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0iI2VlZSIvPjwvc3ZnPg=="
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <div className="flex h-full w-full items-center justify-center">
               <span className="text-4xl text-gray-400">📦</span>
             </div>
           )}

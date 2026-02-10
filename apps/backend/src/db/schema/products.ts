@@ -45,11 +45,10 @@ export const productsTable = pgTable(
     name: varchar({ length: 200 }).notNull(),
     sub_name: varchar({ length: 200 }),
     slug: varchar({ length: 200 }).notNull(),
-    code: varchar({ length: 10 }),
+    code: varchar({ length: 10 }).unique(),
     category_id: integer()
       .references(() => categoriesTable.id, { onDelete: 'cascade' })
       .notNull(),
-
     description: text(),
     thumbnail: text(),
     banner_image: text(),
@@ -112,7 +111,7 @@ export const productItemsTable = pgTable(
   {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: varchar({ length: 200 }).notNull(),
-    code: varchar({ length: 50 }),
+    code: varchar({ length: 50 }).unique(),
     sub_product_id: integer()
       .references(() => subProductsTable.id, { onDelete: 'cascade' })
       .notNull(),

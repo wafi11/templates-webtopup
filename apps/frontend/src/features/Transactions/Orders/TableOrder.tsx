@@ -83,8 +83,8 @@ export function TableOrder({ orders }: TableOrderProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {sortedData?.map((order) => (
-          <TableRow key={order.id}>
+        {sortedData?.map((order,idx) => (
+          <TableRow key={idx}>
             <TableCell className="font-medium">
               {order.invoice_number}
             </TableCell>

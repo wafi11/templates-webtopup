@@ -11,7 +11,11 @@ apps/frontend/src/utils/testQris.tsx
 packages/types/node_modules
 packages/types/dist
 
-apps/transaction-service/tmp/*
+apps/transactions/tmp/*
+apps/transactions/*
+postgres_data/*
+rabbitmq_data/*
+rabbitmq_log/*
 
 node_modules
 check-sizes.sh

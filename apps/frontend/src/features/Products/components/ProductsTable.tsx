@@ -50,8 +50,9 @@ export function ProductsTable({
             <SkeletonTable key={idx} idx={idx} />
           ))
         ) : data.length > 0 ? (
-          data.map((item) => (
+          data.map((item,idx) => (
             <ProductEditTable
+            key={idx}
               item={item}
               deletedPending={deletedPending}
               onDelete={onDelete}

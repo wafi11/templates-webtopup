@@ -22,13 +22,24 @@ export function createCrudEndpoints<T, TRequest = Partial<T>>(
       return response.data;
     },
 
-    findAll: async (params: RequestParams): Promise<ApiResponse<T[]>> => {
+    findAll: async (
+      params: RequestParams,
+      additionalParams?: Record<string, string | number>,
+    ): Promise<ApiResponse<T[]>> => {
       const url = new URLSearchParams();
       url.append("limit", params.limit.toString());
       url.append("offset", params.offset.toString());
       if (params.search) {
         url.append("search", params.search);
       }
+
+      // Tambahkan additional params
+      if (additionalParams) {
+        Object.entries(additionalParams).forEach(([key, value]) => {
+          url.append(key, value.toString());
+        });
+      }
+
       const response = await api.get<ApiResponse<T[]>>(`/${resource}?${url}`);
       return response.data;
     },
@@ -59,13 +70,12 @@ export function createCrudHooks<T, TRequest = Partial<T>>(
 ) {
   return {
     useCreate: () => {
-      const queryClient = useQueryClient(); // ✅ Di dalam hook
+      const queryClient = useQueryClient();
 
       return useMutation({
         mutationKey: [resource, "create"],
         mutationFn: (req: TRequest) => endpoints.create(req),
         onSuccess: (data) => {
-          // Invalidate semua queries untuk resource ini
           queryClient.invalidateQueries({ queryKey: [resource] });
           toast.success(data.message);
         },
@@ -77,11 +87,12 @@ export function createCrudHooks<T, TRequest = Partial<T>>(
 
     useFindAll: (
       params: RequestParams,
+      additionalParams?: Record<string, string | number>,
       options?: Omit<UseQueryOptions<ApiResponse<T[]>>, "queryKey" | "queryFn">,
     ) => {
       return useQuery({
-        queryKey: [resource, "list", params],
-        queryFn: () => endpoints.findAll(params),
+        queryKey: [resource, "list", params, additionalParams],
+        queryFn: () => endpoints.findAll(params, additionalParams),
         ...options,
       });
     },
@@ -99,14 +110,13 @@ export function createCrudHooks<T, TRequest = Partial<T>>(
     },
 
     useUpdate: () => {
-      const queryClient = useQueryClient(); // ✅ Di dalam hook
+      const queryClient = useQueryClient();
 
       return useMutation({
         mutationKey: [resource, "update"],
         mutationFn: ({ id, data }: { id: number; data: TRequest }) =>
           endpoints.update(id, data),
         onSuccess: (data, variables) => {
-          // Invalidate detail & list queries
           queryClient.invalidateQueries({ queryKey: [resource] });
           toast.success(data.message);
         },
@@ -117,13 +127,12 @@ export function createCrudHooks<T, TRequest = Partial<T>>(
     },
 
     useDelete: () => {
-      const queryClient = useQueryClient(); // ✅ Di dalam hook
+      const queryClient = useQueryClient();
 
       return useMutation({
         mutationKey: [resource, "delete"],
         mutationFn: (id: number) => endpoints.delete(id),
         onSuccess: (data) => {
-          // Invalidate semua queries
           queryClient.invalidateQueries({ queryKey: [resource] });
           toast.success(data.message);
         },
